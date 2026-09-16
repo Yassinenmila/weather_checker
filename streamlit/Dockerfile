@@ -2,7 +2,7 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBITECODE=1 
+ENV PYTHONDONTWRITEBYTECODE=1 
 
 COPY streamlit/requirements.txt .
 

@@ -11,9 +11,9 @@ services:
   postgres:
     image: postgres:17
     environment:
-      - POSTGRES_USER= ${POSTGRES_USER}
-      - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
-      - POSTGRES_DB= ${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -31,11 +31,10 @@ services:
 
   airflow-postgres:
     image: postgres:17
-
     environment:
-      - POSTGRES_USER= airflow
-      - POSTGRES_PASSWORD= airflow 
-      - POSTGRES_DB= airflow
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow 
+      - POSTGRES_DB=airflow
     volumes:
       - airflow_data:/var/lib/postgresql/data
 
@@ -44,10 +43,12 @@ services:
     depends_on:
       - airflow-postgres
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
-    command: airflow db migrate
-
-  
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+      - _AIRFLOW_DB_UPGRADE=true
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+    command: version
   
   airflow-scheduler:
     image: apache/airflow:3.1.0
@@ -67,6 +68,7 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
     ports:
       - "8080:8080"
+    command: airflow api-server
 
 volumes:
  postgres_data:
