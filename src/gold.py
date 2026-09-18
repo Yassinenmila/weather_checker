@@ -119,10 +119,3 @@ if 'gold_data.csv' not in os.listdir('data/gold'):
 else: 
     print('it already exist !!')
 
-df = pd.read_csv("data/gold/gold_data.csv")
-print(df[[
-    "city",
-    "date",
-    "risk_score",
-    "risk_category"
-]])
