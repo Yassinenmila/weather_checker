@@ -75,6 +75,16 @@ def score_probabilite(prob):
     else:
         return 100
 
+def categorie_risque(score):
+    if score < 25:
+        return "Faible"
+    elif score < 50:
+        return "Modéré"
+    elif score < 75:
+        return "Élevé"
+    else:
+        return "Très élevé"
+
 if 'gold_data.csv' not in os.listdir('data/gold'):
     df=pd.read_csv('data/silver/silver_weather.csv')
 
@@ -89,6 +99,7 @@ if 'gold_data.csv' not in os.listdir('data/gold'):
 
 
 
+
     df["risk_score"] = (
         df["temperature_score"] * 0.20
         + df["precipitation_score"] * 0.30
@@ -98,9 +109,20 @@ if 'gold_data.csv' not in os.listdir('data/gold'):
 
     df['risk_score']=df["risk_score"].round(2)
 
+    df["risk_category"]=df['risk_score'].apply(categorie_risque)
+
+
     df.to_csv("data/gold/gold_data.csv",index=False)
     print('file created succesfully')
 
 
 else: 
     print('it already exist !!')
+
+df = pd.read_csv("data/gold/gold_data.csv")
+print(df[[
+    "city",
+    "date",
+    "risk_score",
+    "risk_category"
+]])
