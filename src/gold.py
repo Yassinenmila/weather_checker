@@ -119,3 +119,4 @@ if 'gold_data.csv' not in os.listdir('data/gold'):
 else: 
     print('it already exist !!')
 
+
