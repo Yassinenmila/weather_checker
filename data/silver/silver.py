@@ -1,5 +1,5 @@
 import pandas as pd
-
+import os
 
 def verifier(df):
 
@@ -31,37 +31,35 @@ def verifier(df):
     else:
         return True
 
-
-# Lire les données Bronze
-df = pd.read_json("data/bronze/meteo_api.json")
-
-
-# Standardiser les types
-df["city"] = df["city"].astype("string")
-df["date"] = pd.to_datetime(df["date"])
+if 'silver_weather.csv' not in os.listdir('data/silver'):
+    df = pd.read_json("data/bronze/meteo_api.json")
 
 
-# Convertir les colonnes numériques
-columns = [
-    "temperature_max",
-    "temperature_min",
-    "precipitation_sum",
-    "precipitation_probability_max",
-    "wind_speed_max",
-    "wind_gusts_max",
-    "weather_code"
-]
-
-for column in columns:
-    df[column] = pd.to_numeric(df[column], errors="coerce")
+    df["city"] = df["city"].astype("string")
+    df["date"] = pd.to_datetime(df["date"])
 
 
-# Vérifier la qualité
-if verifier(df) is True:
+    columns = [
+        "temperature_max",
+        "temperature_min",
+        "precipitation_sum",
+        "precipitation_probability_max",
+        "wind_speed_max",
+        "wind_gusts_max",
+        "weather_code"
+    ]
 
-    df.to_csv(
-        "data/silver/silver_weather.csv",
-        index=False
-    )
+    for column in columns:
+        df[column] = pd.to_numeric(df[column], errors="coerce")
 
-    print("Silver créé avec succès")
+
+    if verifier(df) is True:
+
+        df.to_csv(
+            "data/silver/silver_weather.csv",
+            index=False
+        )
+
+        print("Silver créé avec succès")
+else: 
+    print('fishier deja exist !!')
