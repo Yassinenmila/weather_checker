@@ -11,6 +11,13 @@ from src.silver import clean
 from src.gold import transform
 from src.data import load_postgres
 
+def run_load_postgres(**context):
+
+    gold_path = context["ti"].xcom_pull(
+        task_ids="gold"
+    )
+
+    load_postgres(gold_path)
 with DAG(
     dag_id="weather_checher",
     start_date=datetime(2026, 9, 19),
@@ -35,7 +42,7 @@ with DAG(
 
     task_load = PythonOperator(
         task_id="load_postgres",
-        python_callable=load_postgres,
+        python_callable=run_load_postgres,
     )
 
     task_extract >> task_silver >> task_gold >> task_load

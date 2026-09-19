@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 
 def load_postgres(gold_path):
 
-    DATABASE_URL = "postgresql+psycopg2://postgres:postgres@postgres:5432/app"
+    DATABASE_URL = "postgresql+psycopg2://postgres:admin@postgres:5432/app"
 
     engine = create_engine(DATABASE_URL)
 
