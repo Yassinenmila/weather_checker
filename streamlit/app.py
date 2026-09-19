@@ -1,21 +1,34 @@
-import os
-import psycopg2
+import streamlit as st
+import pandas as pd
+from sqlalchemy import create_engine
 
-# Docker a déjà injecté ces variables depuis le fichier .env
-DB_USER = os.getenv("POSTGRES_USER", "postgres")
-DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
-DB_NAME = os.getenv("POSTGRES_DB", "app")
-
-# Dans le réseau interne Docker, l'hôte est le nom du service ("postgres")
-DB_HOST = os.getenv("POSTGRES_HOST", "postgres")
-DB_PORT = os.getenv("POSTGRES_PORT", "5432")
-
-conn = psycopg2.connect(
-    host=DB_HOST,
-    port=DB_PORT,
-    dbname=DB_NAME,
-    user=DB_USER,
-    password=DB_PASSWORD
+st.set_page_config(
+    page_title="Weather Checker",
+    page_icon="🌦️",
+    layout="wide"
 )
 
-print("Connexion réussie depuis le conteneur :", conn)
+st.title("🌦️ Weather Checker")
+st.write("Dashboard de surveillance des risques météorologiques")
+
+DATABASE_URL = "postgresql+psycopg2://postgres:admin@postgres:5432/app"
+engine = create_engine(DATABASE_URL)
+
+df = pd.read_sql("SELECT * FROM weather", engine)
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Villes", df["city"].nunique())
+col2.metric("Risque moyen", round(df["risk_score"].mean(), 2))
+col3.metric("Risque maximum", round(df["risk_score"].max(), 2))
+
+ville = st.selectbox(
+    "Ville",
+    ["Toutes"] + sorted(df["city"].unique())
+)
+
+if ville != "Toutes":
+    df = df[df["city"] == ville]
+
+st.subheader("Prévisions météorologiques")
+st.dataframe(df)
