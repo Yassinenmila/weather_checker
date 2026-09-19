@@ -4,27 +4,13 @@ from airflow.providers.standard.operators.python import PythonOperator
 
 from src.bronze import extract
 from src.silver import clean
-
-def extract():
-    print("🚀 Extraction Bronze")
-
-
-def silver():
-    print("🧹 Transformation Silver")
-
-
-def gold():
-    print("📊 Transformation Gold")
-
-
-def load_postgres():
-    print("🐘 Chargement PostgreSQL")
-
+from src.gold import transform
+from src.data import load_postgres
 
 with DAG(
     dag_id="weather_checher",
     start_date=datetime(2026, 9, 19),
-    schedule="0 8 * * *",
+    schedule="@daily",
     catchup=False,
 ) as dag:
 
@@ -35,12 +21,12 @@ with DAG(
 
     task_silver = PythonOperator(
         task_id="silver",
-        python_callable=silver,
+        python_callable=clean,
     )
 
     task_gold = PythonOperator(
         task_id="gold",
-        python_callable=gold,
+        python_callable=transform,
     )
 
     task_load = PythonOperator(
