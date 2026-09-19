@@ -1,43 +1,54 @@
 import pandas as pd
 import os
 
+
 def verifier(df):
 
     if df.isnull().any().any():
         print("Il y a des valeurs nulles")
+        return False
 
-    elif df.duplicated(subset=["city", "date"]).any():
+    if df.duplicated(subset=["city", "date"]).any():
         print("Il y a des doublons")
+        return False
 
-    elif (df["temperature_min"] > df["temperature_max"]).any():
+    if (df["temperature_min"] > df["temperature_max"]).any():
         print("Valeur illogique dans température min/max")
+        return False
 
-    elif (
+    if (
         (df["precipitation_probability_max"] < 0).any()
         or
         (df["precipitation_probability_max"] > 100).any()
     ):
         print("Valeur illogique dans precipitation_probability_max")
+        return False
 
-    elif (df["precipitation_sum"] < 0).any():
+    if (df["precipitation_sum"] < 0).any():
         print("Impossible que la précipitation soit négative")
+        return False
 
-    elif (df["wind_speed_max"] < 0).any():
+    if (df["wind_speed_max"] < 0).any():
         print("Impossible que la vitesse du vent soit négative")
+        return False
 
-    elif (df["wind_gusts_max"] < 0).any():
+    if (df["wind_gusts_max"] < 0).any():
         print("Impossible que les rafales soient négatives")
+        return False
 
-    else:
-        return True
+    return True
 
-if 'silver_weather.csv' not in os.listdir('data/silver'):
+
+def clean():
+
     df = pd.read_json("data/bronze/meteo_api.json")
 
-
     df["city"] = df["city"].astype("string")
-    df["date"] = pd.to_datetime(df["date"])
 
+    df["date"] = pd.to_datetime(
+        df["date"],
+        errors="coerce"
+    )
 
     columns = [
         "temperature_max",
@@ -50,16 +61,32 @@ if 'silver_weather.csv' not in os.listdir('data/silver'):
     ]
 
     for column in columns:
-        df[column] = pd.to_numeric(df[column], errors="coerce")
+        df[column] = pd.to_numeric(
+            df[column],
+            errors="coerce"
+        )
 
+    if verifier(df):
 
-    if verifier(df) is True:
+        os.makedirs("data/silver", exist_ok=True)
+
+        output_path = "data/silver/silver_weather.csv"
 
         df.to_csv(
-            "data/silver/silver_weather.csv",
+            output_path,
             index=False
         )
 
         print("Silver créé avec succès")
-else: 
-    print('fishier deja exist !!')
+
+        return output_path
+
+    else:
+
+        raise ValueError(
+            "Les données Silver ne passent pas les contrôles de qualité."
+        )
+
+
+if __name__ == "__main__":
+    clean()

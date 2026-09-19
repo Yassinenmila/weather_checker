@@ -1,13 +1,14 @@
-import json
 import requests
 import pandas as pd
 import os
 
-csv = pd.read_csv("data/bronze/ma.csv")
 
-tableaux = []
+def extract():
 
-if "meteo_api.json" not in os.listdir('data/bronze'):
+    csv = pd.read_csv("data/bronze/ma.csv")
+
+    tableaux = []
+
     for _, r in csv.iterrows():
 
         ville = r["city"]
@@ -18,11 +19,20 @@ if "meteo_api.json" not in os.listdir('data/bronze'):
             "latitude": latitude,
             "longitude": longitude,
             "forecast_days": 7,
-            "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max",
+            "daily": (
+                "temperature_2m_max,"
+                "temperature_2m_min,"
+                "precipitation_sum,"
+                "weather_code,"
+                "wind_speed_10m_max,"
+                "wind_gusts_10m_max,"
+                "precipitation_probability_max"
+            ),
             "timezone": "Africa/Casablanca",
         }
 
         try:
+
             reponse = requests.get(
                 "https://api.open-meteo.com/v1/forecast",
                 params=parametres,
@@ -42,7 +52,9 @@ if "meteo_api.json" not in os.listdir('data/bronze'):
                 "weather_code": donnees["weather_code"],
                 "wind_speed_max": donnees["wind_speed_10m_max"],
                 "wind_gusts_max": donnees["wind_gusts_10m_max"],
-                "precipitation_probability_max": donnees["precipitation_probability_max"],
+                "precipitation_probability_max": donnees[
+                    "precipitation_probability_max"
+                ],
             })
 
             tableaux.append(tableau)
@@ -52,7 +64,15 @@ if "meteo_api.json" not in os.listdir('data/bronze'):
         except Exception as e:
             print(f"ERREUR {ville} : {e}")
 
-    toutes_les_donnees = pd.concat(tableaux, ignore_index=True)
+    if not tableaux:
+        raise Exception("Aucune donnée météo n'a été récupérée.")
+
+    toutes_les_donnees = pd.concat(
+        tableaux,
+        ignore_index=True
+    )
+
+    os.makedirs("data/bronze", exist_ok=True)
 
     toutes_les_donnees.to_json(
         "data/bronze/meteo_api.json",
@@ -62,5 +82,9 @@ if "meteo_api.json" not in os.listdir('data/bronze'):
     )
 
     print("Fichier meteo_api.json enregistré.")
-else:
-    print('fichier deja exists')
+
+    return "data/bronze/meteo_api.json"
+
+
+if __name__ == "__main__":
+    extract()

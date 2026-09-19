@@ -1,8 +1,9 @@
 from datetime import datetime
-
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 
+from src.bronze import extract
+from src.silver import clean
 
 def extract():
     print("🚀 Extraction Bronze")
@@ -21,7 +22,7 @@ def load_postgres():
 
 
 with DAG(
-    dag_id="weather_pipeline",
+    dag_id="weather_checher",
     start_date=datetime(2026, 9, 19),
     schedule="0 8 * * *",
     catchup=False,
