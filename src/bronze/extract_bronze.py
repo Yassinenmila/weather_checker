@@ -5,7 +5,7 @@ import os
 
 def extract():
 
-    csv = pd.read_csv("data/bronze/ma.csv")
+    csv = pd.read_csv("/opt/airflow/project/data/bronze/ma.csv")
 
     tableaux = []
 

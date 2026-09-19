@@ -2,6 +2,10 @@ from datetime import datetime
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 
+import sys
+
+sys.path.append("/opt/airflow/project")
+
 from src.bronze import extract
 from src.silver import clean
 from src.gold import transform
