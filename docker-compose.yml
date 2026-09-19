@@ -28,48 +28,16 @@ services:
       - "5050:80"
     depends_on:
       - postgres
-
-  airflow-postgres:
-    image: postgres:17
-    environment:
-      - POSTGRES_USER=airflow
-      - POSTGRES_PASSWORD=airflow 
-      - POSTGRES_DB=airflow
-    volumes:
-      - airflow_data:/var/lib/postgresql/data
-
-  airflow-init:
+  airflow:
     image: apache/airflow:3.1.0
-    depends_on:
-      - airflow-postgres
-    environment:
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
-      - _AIRFLOW_DB_UPGRADE=true
-      - _AIRFLOW_WWW_USER_CREATE=true
-      - _AIRFLOW_WWW_USER_USERNAME=admin
-      - _AIRFLOW_WWW_USER_PASSWORD=admin
-    command: version
-  
-  airflow-scheduler:
-    image: apache/airflow:3.1.0
-    depends_on:
-      - airflow-init
-
-    environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
-    command: airflow scheduler
-    
-
-  airflow-webserver:
-    image: apache/airflow:3.1.0
-    depends_on:
-      - airflow-init
-    environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
     ports:
-      - "8080:8080"
-    command: airflow api-server
-
+    - "8080:8080"
+    volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/plugins:/opt/airflow/plugins
+    command: airflow standalone
+    
 volumes:
  postgres_data:
  airflow_data:
