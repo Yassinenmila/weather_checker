@@ -4,11 +4,10 @@ from sqlalchemy import create_engine
 
 st.set_page_config(
     page_title="Weather Checker",
-    page_icon="🌦️",
     layout="wide"
 )
 
-st.title("🌦️ Weather Checker")
+st.title("Weather Checker")
 
 st.write("Dashboard de surveillance des risques météorologiques")
 
@@ -19,10 +18,6 @@ engine = create_engine(DATABASE_URL)
 df = pd.read_sql("SELECT * FROM weather", engine)
 
 
-# ============================================================
-# KPI
-# ============================================================
-
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Villes", df["city"].nunique())
@@ -32,7 +27,6 @@ col2.metric("Risque moyen", round(df["risk_score"].mean(), 2))
 col3.metric("Risque maximum", round(df["risk_score"].max(), 2))
 
 
-# KPI supplémentaires du cahier des charges
 
 col4, col5 = st.columns(2)
 
@@ -47,10 +41,6 @@ col5.metric(
 )
 
 
-# ============================================================
-# FILTRE VILLE
-# ============================================================
-
 ville = st.selectbox(
     "Ville",
     ["Toutes"] + sorted(df["city"].unique())
@@ -60,9 +50,6 @@ if ville != "Toutes":
     df = df[df["city"] == ville]
 
 
-# ============================================================
-# FILTRE RISQUE
-# ============================================================
 
 risque = st.selectbox(
     "Niveau de risque",
@@ -73,11 +60,7 @@ if risque != "Tous":
     df = df[df["risk_category"] == risque]
 
 
-# ============================================================
-# QUESTION MÉTIER
-# ============================================================
-
-st.subheader("🚨 Où faut-il être particulièrement vigilant ?")
+st.subheader(" Où faut-il être particulièrement vigilant ?")
 
 if not df.empty:
 
@@ -91,11 +74,7 @@ if not df.empty:
     )
 
 
-# ============================================================
-# GRAPHIQUE RISQUE PAR VILLE
-# ============================================================
-
-st.subheader("📊 Risque moyen par ville")
+st.subheader("Risque moyen par ville")
 
 risque_ville = (
     df.groupby("city")["risk_score"]
@@ -106,11 +85,8 @@ risque_ville = (
 st.bar_chart(risque_ville)
 
 
-# ============================================================
-# GRAPHIQUE TEMPÉRATURE
-# ============================================================
 
-st.subheader("🌡️ Température maximale par ville")
+st.subheader("Température maximale par ville")
 
 temperature_ville = (
     df.groupby("city")["temperature_max"]
@@ -121,11 +97,7 @@ temperature_ville = (
 st.bar_chart(temperature_ville)
 
 
-# ============================================================
-# GRAPHIQUE PRÉCIPITATIONS
-# ============================================================
-
-st.subheader("🌧️ Précipitations maximales par ville")
+st.subheader("Précipitations maximales par ville")
 
 precipitation_ville = (
     df.groupby("city")["precipitation_sum"]
@@ -136,11 +108,8 @@ precipitation_ville = (
 st.bar_chart(precipitation_ville)
 
 
-# ============================================================
-# RISQUE PAR DATE
-# ============================================================
 
-st.subheader("📅 Risque maximal par période")
+st.subheader("Risque maximal par période")
 
 risque_date = (
     df.groupby("date")["risk_score"]
@@ -149,10 +118,6 @@ risque_date = (
 
 st.line_chart(risque_date)
 
-
-# ============================================================
-# PRÉVISIONS
-# ============================================================
 
 st.subheader("Prévisions météorologiques")
 
