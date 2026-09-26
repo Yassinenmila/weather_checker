@@ -2,7 +2,6 @@ import os
 import pandas as pd
 
 
-
 def categorie_temp(temp):
 
     if temp < 10:
@@ -15,10 +14,10 @@ def categorie_temp(temp):
         return "normal"
 
     elif temp < 40:
-        return "chaude"
+        return "chaud"
 
     else:
-        return "tres chaude"
+        return "tres chaud"
 
 
 def categorie_pres(pres):
@@ -42,7 +41,7 @@ def categorie_vent(vent):
         return "faible"
 
     elif vent < 40:
-        return "moderer"
+        return "modere"
 
     elif vent < 60:
         return "fort"
@@ -128,21 +127,37 @@ def categorie_risque(score):
 
 def transform():
 
-    df = pd.read_csv("data/silver/silver_weather.csv")
+    df = pd.read_csv(
+        "data/silver/silver_weather.csv"
+    )
 
-    df["categorie_temperature"] = (df["temperature_max"].apply(categorie_temp))
+    df["categorie_temperature"] = (
+        df["temperature_max"].apply(categorie_temp)
+    )
 
-    df["categorie_presipitation"] = (df["precipitation_sum"].apply(categorie_pres))
+    df["categorie_precipitation"] = (
+        df["precipitation_sum"].apply(categorie_pres)
+    )
 
-    df["categorie_wind"] = (df["wind_speed_max"].apply(categorie_vent))
+    df["categorie_wind"] = (
+        df["wind_speed_max"].apply(categorie_vent)
+    )
 
-    df["temperature_score"] = (df["temperature_max"].apply(temperature_score))
+    df["temperature_score"] = (
+        df["temperature_max"].apply(temperature_score)
+    )
 
-    df["precipitation_score"] = (df["precipitation_sum"].apply(score_precipitation))
+    df["precipitation_score"] = (
+        df["precipitation_sum"].apply(score_precipitation)
+    )
 
-    df["probability_score"] = (df["precipitation_probability_max"].apply(score_probabilite))
+    df["probability_score"] = (
+        df["precipitation_probability_max"].apply(score_probabilite)
+    )
 
-    df["wind_score"] = (df["wind_speed_max"].apply(vent_score))
+    df["wind_score"] = (
+        df["wind_speed_max"].apply(vent_score)
+    )
 
     df["risk_score"] = (
         df["temperature_score"] * 0.20
@@ -151,19 +166,23 @@ def transform():
         + df["wind_score"] * 0.30
     )
 
+
     df["risk_score"] = df["risk_score"].round(2)
 
+    df["risk_category"] = (
+        df["risk_score"].apply(categorie_risque)
+    )
 
-    df["risk_category"] = (df["risk_score"].apply(categorie_risque))
-
-    os.makedirs("data/gold", exist_ok=True)
 
     output_path = "data/gold/gold_data.csv"
 
-    df.to_csv(output_path,index=False)
+    df.to_csv(
+        output_path,
+        index=False
+    )
 
     print("Gold créé avec succès")
-    
+
     return output_path
 
 

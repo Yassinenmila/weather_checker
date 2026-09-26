@@ -6,7 +6,7 @@ services:
       dockerfile: streamlit/Dockerfile
     
     ports:
-      - "8000:8501"
+      - "8001:8501"
   
   postgres:
     image: postgres:17

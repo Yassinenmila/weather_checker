@@ -3,17 +3,25 @@ import pandas as pd
 import os
 
 
+BASE_PATH = "/opt/airflow/project"
+
+CITIES_FILE = f"{BASE_PATH}/data/bronze/ma.csv"
+OUTPUT_FILE = f"{BASE_PATH}/data/bronze/meteo_api.json"
+
+API_URL = "https://api.open-meteo.com/v1/forecast"
+
+
 def extract():
 
-    csv = pd.read_csv("/opt/airflow/project/data/bronze/ma.csv")
+    cities = pd.read_csv(CITIES_FILE)
 
     tableaux = []
 
-    for _, r in csv.iterrows():
+    for _, row in cities.iterrows():
 
-        ville = r["city"]
-        latitude = r["lat"]
-        longitude = r["lng"]
+        ville = row["city"]
+        latitude = row["lat"]
+        longitude = row["lng"]
 
         parametres = {
             "latitude": latitude,
@@ -23,46 +31,62 @@ def extract():
                 "temperature_2m_max,"
                 "temperature_2m_min,"
                 "precipitation_sum,"
-                "weather_code,"
+                "precipitation_probability_max,"
                 "wind_speed_10m_max,"
                 "wind_gusts_10m_max,"
-                "precipitation_probability_max"
+                "weather_code"
             ),
-            "timezone": "Africa/Casablanca",
+            "timezone": "Africa/Casablanca"
         }
 
         try:
 
-            reponse = requests.get(
-                "https://api.open-meteo.com/v1/forecast",
+            response = requests.get(
+                API_URL,
                 params=parametres,
                 timeout=10
             )
 
-            reponse.raise_for_status()
+            response.raise_for_status()
 
-            donnees = reponse.json()["daily"]
+            data = response.json()
+
+            if "daily" not in data:
+                raise ValueError("Réponse API invalide : daily absent")
+
+            daily = data["daily"]
 
             tableau = pd.DataFrame({
                 "city": ville,
-                "date": donnees["time"],
-                "temperature_max": donnees["temperature_2m_max"],
-                "temperature_min": donnees["temperature_2m_min"],
-                "precipitation_sum": donnees["precipitation_sum"],
-                "weather_code": donnees["weather_code"],
-                "wind_speed_max": donnees["wind_speed_10m_max"],
-                "wind_gusts_max": donnees["wind_gusts_10m_max"],
-                "precipitation_probability_max": donnees[
+                "latitude": latitude,
+                "longitude": longitude,
+                "date": daily["time"],
+                "temperature_2m_max": daily["temperature_2m_max"],
+                "temperature_2m_min": daily["temperature_2m_min"],
+                "precipitation_sum": daily["precipitation_sum"],
+                "precipitation_probability_max": daily[
                     "precipitation_probability_max"
                 ],
+                "wind_speed_10m_max": daily["wind_speed_10m_max"],
+                "wind_gusts_10m_max": daily["wind_gusts_10m_max"],
+                "weather_code": daily["weather_code"]
             })
 
             tableaux.append(tableau)
 
-            print("Données récupérées pour", ville)
+            print(f"Données récupérées pour {ville}")
 
-        except Exception as e:
-            print(f"ERREUR {ville} : {e}")
+        except requests.exceptions.Timeout:
+            print(f"TIMEOUT : {ville}")
+
+        except requests.exceptions.HTTPError as e:
+            print(f"ERREUR HTTP {ville} : {e}")
+
+        except (ValueError, KeyError) as e:
+            print(f"ERREUR DONNÉES {ville} : {e}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"ERREUR REQUÊTE {ville} : {e}")
 
     if not tableaux:
         raise Exception("Aucune donnée météo n'a été récupérée.")
@@ -72,18 +96,21 @@ def extract():
         ignore_index=True
     )
 
-    os.makedirs("data/bronze", exist_ok=True)
+    os.makedirs(
+        f"{BASE_PATH}/data/bronze",
+        exist_ok=True
+    )
 
     toutes_les_donnees.to_json(
-        "data/bronze/meteo_api.json",
+        OUTPUT_FILE,
         orient="records",
         force_ascii=False,
         indent=2
     )
 
-    print("Fichier meteo_api.json enregistré.")
+    print(f"Fichier enregistré : {OUTPUT_FILE}")
 
-    return "data/bronze/meteo_api.json"
+    return OUTPUT_FILE
 
 
 if __name__ == "__main__":
