@@ -2,123 +2,291 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 
+
+# Configuration
 st.set_page_config(
-    page_title="Weather Checker",
+    page_title="Weather Risk Dashboard",
+    page_icon="🌦️",
     layout="wide"
 )
 
-st.title("Weather Checker")
+st.title("🌦️ Weather Risk Dashboard")
+st.write("Prévisions météo et analyse des risques pour les livraisons")
 
-st.write("Dashboard de surveillance des risques météorologiques")
 
+# Connexion PostgreSQL
 DATABASE_URL = "postgresql+psycopg2://postgres:admin@postgres:5432/app"
 
 engine = create_engine(DATABASE_URL)
 
-df = pd.read_sql("SELECT * FROM weather", engine)
+
+# Lire les données
+cities = pd.read_sql(
+    "SELECT * FROM cities",
+    engine
+)
+
+forecasts = pd.read_sql(
+    "SELECT * FROM weathers",
+    engine
+)
 
 
-col1, col2, col3 = st.columns(3)
-
-col1.metric("Villes", df["city"].nunique())
-
-col2.metric("Risque moyen", round(df["risk_score"].mean(), 2))
-
-col3.metric("Risque maximum", round(df["risk_score"].max(), 2))
+# Convertir la date
+forecasts["date"] = pd.to_datetime(forecasts["date"])
 
 
+# =========================
+# FILTRES
+# =========================
 
-col4, col5 = st.columns(2)
+st.sidebar.header("🔎 Filtres")
+
+# Filtre ville
+city_list = ["Toutes"] + sorted(forecasts["city"].unique().tolist())
+
+selected_city = st.sidebar.selectbox(
+    "Ville",
+    city_list
+)
+
+
+# Filtre période
+period = st.sidebar.selectbox(
+    "Période",
+    ["Toutes", "Aujourd'hui", "Prochains 3 jours", "Prochains 7 jours"]
+)
+
+
+# Filtre niveau de risque
+risk_list = [
+    "Tous",
+    "Faible",
+    "Modéré",
+    "Élevé",
+    "Très élevé"
+]
+
+selected_risk = st.sidebar.selectbox(
+    "Niveau de risque",
+    risk_list
+)
+
+
+# Filtre date
+min_date = forecasts["date"].min().date()
+max_date = forecasts["date"].max().date()
+
+selected_dates = st.sidebar.date_input(
+    "Date",
+    value=(min_date, max_date),
+    min_value=min_date,
+    max_value=max_date
+)
+
+
+# =========================
+# APPLICATION DES FILTRES
+# =========================
+
+filtered = forecasts.copy()
+
+
+# Ville
+if selected_city != "Toutes":
+    filtered = filtered[
+        filtered["city"] == selected_city
+    ]
+
+
+# Date
+if len(selected_dates) == 2:
+
+    start_date = pd.Timestamp(selected_dates[0])
+    end_date = pd.Timestamp(selected_dates[1])
+
+    filtered = filtered[
+        (filtered["date"] >= start_date)
+        & (filtered["date"] <= end_date)
+    ]
+
+
+# Période
+if period == "Aujourd'hui":
+
+    today = forecasts["date"].min()
+
+    filtered = filtered[
+        filtered["date"] == today
+    ]
+
+elif period == "Prochains 3 jours":
+
+    first_day = forecasts["date"].min()
+    last_day = first_day + pd.Timedelta(days=2)
+
+    filtered = filtered[
+        (filtered["date"] >= first_day)
+        & (filtered["date"] <= last_day)
+    ]
+
+elif period == "Prochains 7 jours":
+
+    first_day = forecasts["date"].min()
+    last_day = first_day + pd.Timedelta(days=6)
+
+    filtered = filtered[
+        (filtered["date"] >= first_day)
+        & (filtered["date"] <= last_day)
+    ]
+
+
+# Niveau de risque
+if selected_risk != "Tous":
+
+    filtered = filtered[
+        filtered["risk_category"] == selected_risk
+    ]
+
+
+# =========================
+# KPI
+# =========================
+
+st.header("📊 Indicateurs clés")
+
+
+number_cities = filtered["city"].nunique()
+
+max_temperature = filtered["temperature_max"].max()
+
+max_precipitation = filtered["precipitation_sum"].max()
+
+risk_periods = filtered[
+    filtered["risk_score"] >= 50
+].shape[0]
+
+
+if len(filtered) > 0:
+
+    highest_risk_row = filtered.loc[
+        filtered["risk_score"].idxmax()
+    ]
+
+    highest_risk_city = highest_risk_row["city"]
+
+else:
+
+    highest_risk_city = "Aucune donnée"
+
+
+col1, col2, col3, col4, col5 = st.columns(5)
+
+
+col1.metric(
+    "🏙️ Nombre de villes",
+    number_cities
+)
+
+col2.metric(
+    "🌡️ Température maximale",
+    f"{max_temperature:.1f} °C" if pd.notna(max_temperature) else "N/A"
+)
+
+col3.metric(
+    "🌧️ Précipitations maximales",
+    f"{max_precipitation:.1f} mm" if pd.notna(max_precipitation) else "N/A"
+)
 
 col4.metric(
-    "Température maximale",
-    f"{df['temperature_max'].max():.1f} °C"
+    "⚠️ Périodes à risque",
+    risk_periods
 )
 
 col5.metric(
-    "Précipitations maximales",
-    f"{df['precipitation_sum'].max():.1f} mm"
+    "📍 Ville à risque",
+    highest_risk_city
 )
 
 
-ville = st.selectbox(
-    "Ville",
-    ["Toutes"] + sorted(df["city"].unique())
-)
+# =========================
+# VIGILANCE
+# =========================
 
-if ville != "Toutes":
-    df = df[df["city"] == ville]
+st.header("⚠️ Où et quand faut-il être vigilant ?")
 
 
+if len(filtered) > 0:
 
-risque = st.selectbox(
-    "Niveau de risque",
-    ["Tous"] + sorted(df["risk_category"].unique())
-)
+    highest_risk = filtered.sort_values(
+        "risk_score",
+        ascending=False
+    ).head(10)
 
-if risque != "Tous":
-    df = df[df["risk_category"] == risque]
+    st.dataframe(
+        highest_risk[
+            [
+                "city",
+                "date",
+                "temperature_max",
+                "precipitation_sum",
+                "wind_speed_max",
+                "risk_score",
+                "risk_category"
+            ]
+        ],
+        use_container_width=True,
+        hide_index=True
+    )
+
+else:
+
+    st.warning("Aucune donnée ne correspond aux filtres sélectionnés.")
 
 
-st.subheader(" Où faut-il être particulièrement vigilant ?")
+# =========================
+# GRAPHIQUE RISQUE
+# =========================
 
-if not df.empty:
+st.header("📈 Évolution du risque")
 
-    ligne_risque = df.loc[df["risk_score"].idxmax()]
 
-    st.warning(
-        f"Risque maximal à **{ligne_risque['city']}** "
-        f"le **{ligne_risque['date']}** "
-        f"avec un score de **{ligne_risque['risk_score']}/100** "
-        f"({ligne_risque['risk_category']})."
+if len(filtered) > 0:
+
+    chart_data = filtered[
+        ["date", "risk_score"]
+    ].groupby("date").mean()
+
+    st.line_chart(
+        chart_data
     )
 
 
-st.subheader("Risque moyen par ville")
+# =========================
+# PREVISIONS
+# =========================
 
-risque_ville = (
-    df.groupby("city")["risk_score"]
-    .mean()
-    .sort_values(ascending=False)
-)
-
-st.bar_chart(risque_ville)
+st.header("🌦️ Prévisions météo")
 
 
+if len(filtered) > 0:
 
-st.subheader("Température maximale par ville")
-
-temperature_ville = (
-    df.groupby("city")["temperature_max"]
-    .max()
-    .sort_values(ascending=False)
-)
-
-st.bar_chart(temperature_ville)
-
-
-st.subheader("Précipitations maximales par ville")
-
-precipitation_ville = (
-    df.groupby("city")["precipitation_sum"]
-    .max()
-    .sort_values(ascending=False)
-)
-
-st.bar_chart(precipitation_ville)
-
-
-
-st.subheader("Risque maximal par période")
-
-risque_date = (
-    df.groupby("date")["risk_score"]
-    .max()
-)
-
-st.line_chart(risque_date)
-
-
-st.subheader("Prévisions météorologiques")
-
-st.dataframe(df)
+    st.dataframe(
+        filtered[
+            [
+                "city",
+                "date",
+                "temperature_max",
+                "temperature_min",
+                "precipitation_sum",
+                "precipitation_probability_max",
+                "wind_speed_max",
+                "wind_gusts_max",
+                "weather_code",
+                "risk_score",
+                "risk_category"
+            ]
+        ],
+        use_container_width=True,
+        hide_index=True
+    )

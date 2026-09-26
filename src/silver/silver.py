@@ -41,7 +41,7 @@ def verifier(df):
 
 def clean():
 
-    df = pd.read_json("data/bronze/meteo_api.json")
+    df = pd.read_json("/opt/airflow/project/data/bronze/meteo_api.json")
 
     df["city"] = df["city"].astype("string")
 
@@ -77,7 +77,7 @@ def clean():
 
     if verifier(df):
 
-        output_path = "data/silver/silver_weather.csv"
+        output_path = "/opt/airflow/project/data/silver/silver_weather.csv"
 
         df.to_csv(
             output_path,

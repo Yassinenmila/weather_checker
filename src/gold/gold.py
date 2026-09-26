@@ -128,7 +128,7 @@ def categorie_risque(score):
 def transform():
 
     df = pd.read_csv(
-        "data/silver/silver_weather.csv"
+        "/opt/airflow/project/data/silver/silver_weather.csv"
     )
 
     df["categorie_temperature"] = (
@@ -172,7 +172,7 @@ def transform():
         df["risk_score"].apply(categorie_risque)
     )
 
-    output_path = "data/gold/gold_data.csv"
+    output_path = "/opt/airflow/project/data/gold/gold_data.csv"
 
     df.to_csv(
         output_path,

@@ -1,0 +1,24 @@
+weather_checker/
+│
+├── data/
+│   ├── bronze/
+│   ├── silver/
+│   └── gold/
+│
+├── dags/
+│   └── weather_checher.py
+│
+├── src/
+│   ├── extract.py
+│   ├── silver.py
+│   ├── gold.py
+│   └── load_postgres.py
+│
+├── streamlit/
+│   └── app.py
+│
+├── sql/
+│   └── schema.sql
+│
+├── docker-compose.yml
+└── requirements.txt

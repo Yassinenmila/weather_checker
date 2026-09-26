@@ -8,7 +8,7 @@ def load_postgres(gold_path):
 
     engine = create_engine(DATABASE_URL)
 
-    cities = pd.read_csv("data/bronze/ma.csv")
+    cities = pd.read_csv("/opt/airflow/project/data/bronze/ma.csv")
 
     cities = cities[
         ["city", "lat", "lng"]

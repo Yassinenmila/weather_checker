@@ -96,11 +96,6 @@ def extract():
         ignore_index=True
     )
 
-    os.makedirs(
-        f"{BASE_PATH}/data/bronze",
-        exist_ok=True
-    )
-
     toutes_les_donnees.to_json(
         OUTPUT_FILE,
         orient="records",

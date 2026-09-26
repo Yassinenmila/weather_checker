@@ -1,0 +1,125 @@
+{"timestamp":"2026-09-26T16:18:02.772314Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-09-26T16:18:02.772996Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_checher.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-09-26T16:18:03.434159Z","level":"info","event":"Données récupérées pour Casablanca","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:03.804619Z","level":"info","event":"Données récupérées pour Tangier","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:04.174974Z","level":"info","event":"Données récupérées pour Fès","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:04.564196Z","level":"info","event":"Données récupérées pour Marrakech","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:04.975004Z","level":"info","event":"Données récupérées pour Sale","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:05.383480Z","level":"info","event":"Données récupérées pour Meknès","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:05.758835Z","level":"info","event":"Données récupérées pour Rabat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:06.139952Z","level":"info","event":"Données récupérées pour Agadir","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:06.503474Z","level":"info","event":"Données récupérées pour Kenitra","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:06.889501Z","level":"info","event":"Données récupérées pour Oujda-Angad","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:07.266520Z","level":"info","event":"Données récupérées pour Tétouan","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:07.625060Z","level":"info","event":"Données récupérées pour Safi","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:07.992882Z","level":"info","event":"Données récupérées pour Taourirt","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:08.347759Z","level":"info","event":"Données récupérées pour Temara","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:08.725910Z","level":"info","event":"Données récupérées pour Laâyoune","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:09.094184Z","level":"info","event":"Données récupérées pour El Jadid","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:09.493756Z","level":"info","event":"Données récupérées pour Ait Melloul","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:09.866942Z","level":"info","event":"Données récupérées pour Béni Mellal","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:10.278216Z","level":"info","event":"Données récupérées pour Bouskoura","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:10.653057Z","level":"info","event":"Données récupérées pour Tiznit","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:11.047052Z","level":"info","event":"Données récupérées pour Mohammedia","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:11.550720Z","level":"info","event":"Données récupérées pour Kouribga","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:11.919998Z","level":"info","event":"Données récupérées pour Settat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:12.323231Z","level":"info","event":"Données récupérées pour Barrechid","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:12.689913Z","level":"info","event":"Données récupérées pour Ad Dakhla","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:13.108565Z","level":"info","event":"Données récupérées pour Nador","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:13.463460Z","level":"info","event":"Données récupérées pour Taza","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:13.811298Z","level":"info","event":"Données récupérées pour Inezgane","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:14.192938Z","level":"info","event":"Données récupérées pour Larache","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:14.571467Z","level":"info","event":"Données récupérées pour Al Khmissat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:14.942705Z","level":"info","event":"Données récupérées pour Guelmim","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:15.321985Z","level":"info","event":"Données récupérées pour Ksar El Kebir","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:15.691461Z","level":"info","event":"Données récupérées pour Khénifra","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:16.079545Z","level":"info","event":"Données récupérées pour Skhirate","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:16.491291Z","level":"info","event":"Données récupérées pour Beni Yakhlef","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:16.851720Z","level":"info","event":"Données récupérées pour Sidi Yahya Zaer","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:17.220745Z","level":"info","event":"Données récupérées pour Ben Guerir","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:17.707902Z","level":"info","event":"Données récupérées pour Ait Ali","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:18.161331Z","level":"info","event":"Données récupérées pour My Drarga","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:18.817333Z","level":"info","event":"Données récupérées pour Lqoliaa","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:19.193334Z","level":"info","event":"Données récupérées pour El Kelaa des Srarhna","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:19.569127Z","level":"info","event":"Données récupérées pour Moulay Abdallah","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:19.943601Z","level":"info","event":"Données récupérées pour Tiflet","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:20.312911Z","level":"info","event":"Données récupérées pour Oulad Teïma","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:20.691696Z","level":"info","event":"Données récupérées pour Berkane","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:25.330606Z","level":"info","event":"Données récupérées pour Ain El Aouda","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:25.839662Z","level":"info","event":"Données récupérées pour Errachidia","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:26.266883Z","level":"info","event":"Données récupérées pour Al Fqih Ben Çalah","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:26.646618Z","level":"info","event":"Données récupérées pour Ad Darwa","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:27.030108Z","level":"info","event":"Données récupérées pour Martil","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:27.424019Z","level":"info","event":"Données récupérées pour Sidi Slimane","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:27.778987Z","level":"info","event":"Données récupérées pour Oued Zem","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:28.159147Z","level":"info","event":"Données récupérées pour Sefrou","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:28.598367Z","level":"info","event":"Données récupérées pour Taroudannt","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:28.979881Z","level":"info","event":"Données récupérées pour Essaouira","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:29.364464Z","level":"info","event":"Données récupérées pour Azrou","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:29.744317Z","level":"info","event":"Données récupérées pour Guercif","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:30.180024Z","level":"info","event":"Données récupérées pour Warzat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:30.540671Z","level":"info","event":"Données récupérées pour Fnidq","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:30.961696Z","level":"info","event":"Données récupérées pour Tan-Tan","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:31.624184Z","level":"info","event":"Données récupérées pour Sidi Qacem","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:32.018576Z","level":"info","event":"Données récupérées pour M’diq","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:32.371414Z","level":"info","event":"Données récupérées pour Youssoufia","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:32.738590Z","level":"info","event":"Données récupérées pour Midalt","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:33.101868Z","level":"info","event":"Données récupérées pour Aïn Harrouda","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:33.516684Z","level":"info","event":"Données récupérées pour Souq Sebt Oulad Nemma","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:33.970500Z","level":"info","event":"Données récupérées pour Mehdya","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:38.348628Z","level":"info","event":"Données récupérées pour Ouezzane","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:42.734563Z","level":"info","event":"Données récupérées pour Semara","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:43.297121Z","level":"info","event":"Données récupérées pour Ait Ourir","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:43.680190Z","level":"info","event":"Données récupérées pour Oulad Tayeb","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:44.070592Z","level":"info","event":"Données récupérées pour Tit Mellil","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:44.430831Z","level":"info","event":"Données récupérées pour Sidi Bennour","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:44.806748Z","level":"info","event":"Données récupérées pour Temsia","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:45.212020Z","level":"info","event":"Données récupérées pour Biougra","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:45.573515Z","level":"info","event":"Données récupérées pour Al Hoceïma","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:45.947450Z","level":"info","event":"Données récupérées pour Qasbat Tadla","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:46.353840Z","level":"info","event":"Données récupérées pour Aziylal","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:46.733718Z","level":"info","event":"Données récupérées pour Boujad","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:47.147042Z","level":"info","event":"Données récupérées pour Al Aaroui","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:47.557593Z","level":"info","event":"Données récupérées pour Mrirt","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:47.945398Z","level":"info","event":"Données récupérées pour Tineghir","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:48.319568Z","level":"info","event":"Données récupérées pour Bouknadel","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:48.787549Z","level":"info","event":"Données récupérées pour Cabo Bojador","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:49.168320Z","level":"info","event":"Données récupérées pour Zagora","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:49.560302Z","level":"info","event":"Données récupérées pour Azemmour","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:49.934573Z","level":"info","event":"Données récupérées pour El Hajeb","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:50.325838Z","level":"info","event":"Données récupérées pour Jerada","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:50.698627Z","level":"info","event":"Données récupérées pour El Aïoun","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:51.099871Z","level":"info","event":"Données récupérées pour Tameslouht","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:51.689554Z","level":"info","event":"Données récupérées pour Sidi Yahia El Gharb","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:52.140817Z","level":"info","event":"Données récupérées pour Chichaoua","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:52.581042Z","level":"info","event":"Données récupérées pour Al ’Attawia","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:52.975056Z","level":"info","event":"Données récupérées pour Tabount","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:53.359540Z","level":"info","event":"Données récupérées pour Zaïo","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:53.743250Z","level":"info","event":"Données récupérées pour Aguelmous","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:54.137052Z","level":"info","event":"Données récupérées pour Asilah","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:54.526001Z","level":"info","event":"Données récupérées pour Imzouren","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:54.940488Z","level":"info","event":"Données récupérées pour Mediouna","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:55.319953Z","level":"info","event":"Données récupérées pour Demnat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:55.747727Z","level":"info","event":"Données récupérées pour Aïn Taoujdat","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:56.186355Z","level":"info","event":"Données récupérées pour Sidi Smai’il","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:56.625104Z","level":"info","event":"Données récupérées pour Moulay Bousselham","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:57.053099Z","level":"info","event":"Données récupérées pour Mechraa Bel Ksiri","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:57.603807Z","level":"info","event":"Données récupérées pour Souk et Tnine Jorf el Mellah","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:58.004010Z","level":"info","event":"Données récupérées pour Zeghanghane","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:58.374282Z","level":"info","event":"Données récupérées pour Oulad Barhil","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:58.776938Z","level":"info","event":"Données récupérées pour Bir Jdid","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:59.154922Z","level":"info","event":"Données récupérées pour Bou Arfa","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:59.524887Z","level":"info","event":"Données récupérées pour Tahannawt","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:18:59.904095Z","level":"info","event":"Données récupérées pour Arfoud","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:00.288500Z","level":"info","event":"Données récupérées pour Tahla","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:00.676552Z","level":"info","event":"Données récupérées pour Missour","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:01.026808Z","level":"info","event":"Données récupérées pour Sidi Lmokhtar","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:01.424072Z","level":"info","event":"Données récupérées pour Douar Toulal","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:02.014752Z","level":"info","event":"Données récupérées pour Oulad Yaïch","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:02.392213Z","level":"info","event":"Données récupérées pour Zawyat ech Cheïkh","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:03.103665Z","level":"info","event":"Données récupérées pour Imi-n-Tanout","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:03.477103Z","level":"info","event":"Données récupérées pour Sebt Gzoula","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:03.855043Z","level":"info","event":"Données récupérées pour Tifariti","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:04.038150Z","level":"info","event":"Fichier enregistré : /opt/airflow/project/data/bronze/meteo_api.json","logger":"task.stdout"}
+{"timestamp":"2026-09-26T16:19:04.041675Z","level":"info","event":"Done. Returned value was: /opt/airflow/project/data/bronze/meteo_api.json","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator","filename":"python.py","lineno":218}
+{"timestamp":"2026-09-26T16:19:04.041880Z","level":"info","event":"Pushing xcom","ti":"RuntimeTaskInstance(id=UUID('01a0de82-6367-7f34-a67f-e889b45170b2'), task_id='extract', dag_id='weather_checher', run_id='manual__2026-09-26T16:18:02.202654+00:00', try_number=1, dag_version_id=UUID('01a0de77-0422-71fc-b882-5059e15b32e5'), map_index=-1, hostname='0fb2becc6bef', context_carrier={}, task=<Task(PythonOperator): extract>, bundle_instance=LocalDagBundle(name=dags-folder), max_tries=0, start_date=datetime.datetime(2026, 9, 26, 16, 18, 2, 746158, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None)","logger":"task","filename":"task_runner.py","lineno":1352}
