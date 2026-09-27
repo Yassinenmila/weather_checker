@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 
-
-# Configuration
 st.set_page_config(
     page_title="Weather Risk Dashboard",
     page_icon="🌦️",
@@ -13,8 +11,6 @@ st.set_page_config(
 st.title("🌦️ Weather Risk Dashboard")
 st.write("Prévisions météo et analyse des risques pour les livraisons")
 
-
-# Connexion PostgreSQL
 DATABASE_URL = "postgresql+psycopg2://postgres:admin@postgres:5432/app"
 
 engine = create_engine(DATABASE_URL)
@@ -32,13 +28,7 @@ forecasts = pd.read_sql(
 )
 
 
-# Convertir la date
 forecasts["date"] = pd.to_datetime(forecasts["date"])
-
-
-# =========================
-# FILTRES
-# =========================
 
 st.sidebar.header("🔎 Filtres")
 
@@ -84,10 +74,6 @@ selected_dates = st.sidebar.date_input(
     max_value=max_date
 )
 
-
-# =========================
-# APPLICATION DES FILTRES
-# =========================
 
 filtered = forecasts.copy()
 

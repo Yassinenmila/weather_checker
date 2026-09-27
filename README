@@ -1,24 +1,139 @@
-weather_checker/
-│
+## Weather Checker
+
+# Description
+
+Weather Checker est un projet de data engineering qui permet de récupérer les prévisions météorologiques de plusieurs villes marocaines et d'identifier les périodes qui peuvent présenter un risque pour les opérations de livraison.
+
+Le projet utilise une architecture Bronze, Silver et Gold. Les données sont ensuite chargées dans PostgreSQL et affichées dans un dashboard Streamlit.
+
+## Sources de données
+
+Deux sources sont utilisées :
+
+SimpleMaps pour récupérer les villes marocaines et leurs coordonnées.
+Open-Meteo pour récupérer les prévisions météorologiques.
+
+Les données récupérées depuis Open-Meteo sont notamment la température, les précipitations, la probabilité de précipitations, le vent, les rafales et le weather code.
+
+## Architecture
+
+```text
+SimpleMaps + Open-Meteo
+          |
+        Bronze
+          |
+        Silver
+          |
+         Gold
+          |
+      PostgreSQL
+          |
+       Streamlit
+```
+
+Le pipeline est automatisé avec Apache Airflow.
+
+## Risk Score
+
+Un score de risque compris entre 0 et 100 est calculé à partir de la température, des précipitations, de leur probabilité et du vent.
+
+Les poids utilisés sont :
+
+* Température : 20 %
+* Précipitations : 30 %
+* Probabilité de précipitations : 20 %
+* Vent : 30 %
+
+Le score est ensuite classé en quatre niveaux :
+
+```text
+0 - 24    Faible
+25 - 49   Modéré
+50 - 74   Élevé
+75 - 100  Très élevé
+```
+
+## PostgreSQL
+
+La base contient deux tables principales :
+
+* `cities` : contient les villes et leurs coordonnées.
+* `forecasts` : contient les prévisions météorologiques et le score de risque.
+
+## Dashboard
+
+Le dashboard Streamlit permet de consulter les prévisions et les risques.
+
+Il contient plusieurs indicateurs :
+
+* nombre de villes ;
+* température maximale ;
+* précipitations maximales ;
+* nombre de périodes à risque ;
+* ville avec le risque le plus élevé.
+
+Des filtres permettent de sélectionner une ville, une date et un niveau de risque.
+
+## Airflow
+
+Le DAG utilisé dans le projet est `weather_checher`.
+
+Les différentes étapes sont :
+
+```text
+extract -> silver -> gold -> load_postgres
+```
+
+Le DAG est prévu pour être exécuté automatiquement.
+
+## Installation
+
+Cloner le projet :
+
+```bash
+git clone https://github.com/Yassinenmila/weather-checker.git
+cd weather-checker
+```
+
+Lancer les conteneurs :
+
+```bash
+docker compose up -d --build
+```
+
+Services utilisés :
+
+```text
+Airflow    : http://localhost:8080
+Streamlit  : http://localhost:8501
+PostgreSQL : 5432
+```
+
+## Structure du projet
+
+```text
+weather-checker/
+├── extraction/
+├── transformation/
+├── load/
+├── dashboard/
+├── dags/
 ├── data/
 │   ├── bronze/
 │   ├── silver/
 │   └── gold/
-│
-├── dags/
-│   └── weather_checher.py
-│
-├── src/
-│   ├── extract.py
-│   ├── silver.py
-│   ├── gold.py
-│   └── load_postgres.py
-│
-├── streamlit/
-│   └── app.py
-│
 ├── sql/
-│   └── schema.sql
-│
 ├── docker-compose.yml
-└── requirements.txt
+├── requirements.txt
+└── README.md
+```
+
+## Captures d'écran
+
+Les captures du dashboard et d'Airflow sont disponibles dans le dossier `screenshots/`.
+
+```text
+screenshots/
+├── dashboard.png
+└── airflow.png
+```
