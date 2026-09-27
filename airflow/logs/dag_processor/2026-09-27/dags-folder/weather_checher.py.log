@@ -4,3 +4,4 @@
 {"timestamp":"2026-09-27T19:13:10.116626Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_checher.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
 {"timestamp":"2026-09-27T19:13:40.689812Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_checher.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
 {"timestamp":"2026-09-27T19:14:11.204773Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_checher.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-09-27T19:14:41.905840Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/weather_checher.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
