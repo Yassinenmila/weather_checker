@@ -1,0 +1,32 @@
+@startuml 
+
+class cities { 
+    city : VARCHAR 
+    lat : FLOAT 
+    lng : FLOAT
+} 
+
+class forecasts { 
+    city : VARCHAR 
+    date : DATE 
+    temperature_max : FLOAT 
+    temperature_min : FLOAT 
+    precipitation_sum : FLOAT 
+    precipitation_probability_max : FLOAT 
+    wind_speed_max : FLOAT 
+    wind_gusts_max : FLOAT 
+    weather_code : INTEGER 
+    categorie_temperature : VARCHAR 
+    categorie_precipitation : VARCHAR 
+    categorie_wind : VARCHAR 
+    temperature_score : FLOAT 
+    precipitation_score : FLOAT 
+    probability_score : FLOAT 
+    wind_score : FLOAT 
+    risk_score : FLOAT 
+    risk_category : VARCHAR 
+    } 
+    
+    cities "1" --> "0..*" forecasts : city 
+    
+    @enduml
